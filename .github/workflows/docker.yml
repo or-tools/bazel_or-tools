@@ -21,10 +21,10 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Build env image
-      run: make --directory=bazel ${DISTRO}_env
+      run: make --directory=ci ${DISTRO}_env
     - name: Build devel image
-      run: make --directory=bazel ${DISTRO}_devel
+      run: make --directory=ci ${DISTRO}_devel
     - name: Build project
-      run: make --directory=bazel ${DISTRO}_build
+      run: make --directory=ci ${DISTRO}_build
     - name: Test project
-      run: make --directory=bazel ${DISTRO}_test
+      run: make --directory=ci ${DISTRO}_test
