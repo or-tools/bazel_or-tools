@@ -1,6 +1,6 @@
 [![Status][linux_svg]][linux_link]
 
-[linux_svg]: https://github.com/or-tools/bazel_or-tools/workflows/Linux/badge.svg?branch=master
+[linux_svg]: https://github.com/or-tools/bazel_or-tools/workflows/Linux/badge.svg?branch=main
 [linux_link]: https://github.com/or-tools/bazel_or-tools/actions?query=workflow%3A"Linux"
 
 # Introduction
