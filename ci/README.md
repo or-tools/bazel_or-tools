@@ -8,8 +8,9 @@ pros:
 
 cons:
 * Only GNU/Linux distro supported.
-* Could take few GiB
-  * ~500MiB OS + C++/CMake tools
+* Could take ~3.5GiB for each distro
+  * ~1GiB OS + C++/CMake tools
+  * ~2GiB bazel build
 
 # Usage
 To get the help simply type:
