@@ -20,7 +20,7 @@ http_archive(
 
 git_repository(
     name = "com_google_absl",
-    commit = "0f3bb46", # release 20200923.2
+    commit = "6f9d96a", # release 20200923.3
     remote = "https://github.com/abseil/abseil-cpp.git",
 )
 
@@ -32,14 +32,14 @@ git_repository(
 
 git_repository(
     name = "com_google_protobuf",
-    commit = "2514f0b",  # release v3.14.0
+    commit = "983d115",  # release v3.15.3
     remote = "https://github.com/protocolbuffers/protobuf.git",
 )
 #load("@com_google_protobuf//:protobuf_deps.bzl", "protobuf_deps")
 
 git_repository(
     name = "com_google_ortools",
-    commit = "b77bd3a", # release v8.1
+    commit = "fa84bc0", # release v8.2
     remote = "https://github.com/google/or-tools.git",
 )
 
