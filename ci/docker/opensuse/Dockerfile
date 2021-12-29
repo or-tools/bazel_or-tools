@@ -15,7 +15,7 @@ COPY . .
 
 FROM devel as build
 RUN bazel version
-RUN bazel build --curses=no --cxxopt=-std=c++17 --copt='-Wno-sign-compare' //main:template
+RUN bazel build -c opt --cxxopt=-std=c++17 //main:template
 
 FROM build as test
-RUN bazel test -c opt --curses=no --cxxopt=-std=c++17 --copt='-Wno-sign-compare' //main:template
+RUN bazel test --test_output=all -c opt --cxxopt=-std=c++17 //main:all

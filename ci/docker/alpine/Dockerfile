@@ -23,7 +23,7 @@ COPY . .
 
 FROM devel as build
 RUN bazel version
-RUN bazel build --curses=no --host_javabase=@local_jdk//:jdk --cxxopt=-std=c++17 --copt='-Wno-sign-compare' //main:template
+RUN bazel build -c opt --host_javabase=@local_jdk//:jdk --cxxopt=-std=c++17 //main:template
 
 FROM build as test
-RUN bazel test --curses=no --host_javabase=@local_jdk//:jdk --cxxopt=-std=c++17 --copt='-Wno-sign-compare' //main:template
+RUN bazel test --test_output=all -c opt --host_javabase=@local_jdk//:jdk --cxxopt=-std=c++17 //main:all
