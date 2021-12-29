@@ -1,0 +1,23 @@
+# Project Files unneeded by docker
+.dockerignore
+
+.git
+.gitignore
+.github
+
+.clang-format
+
+# Misc
+ci
+LICENSE
+README.md
+
+# Bazel
+bazel-bazel_or-tools
+bazel-bin
+bazel-out
+bazel-testlogs
+
+# Editor directories and files
+*.user
+*.swp
