@@ -1,0 +1,23 @@
+name: MacOS
+
+on:
+  push:
+  pull_request:
+  schedule:
+    # min hours day(month) month day(week)
+    - cron: '0 0 7,22 * *'
+
+jobs:
+  macos:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install Bazel
+        run: |
+          brew update
+          #brew install bazel
+          bazel --version
+      - name: Build
+        run: bazel build --cxxopt=-std=c++17 //...:all
+      - name: Test
+        run: bazel test --cxxopt=-std=c++17 //...:all

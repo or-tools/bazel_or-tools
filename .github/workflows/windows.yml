@@ -1,0 +1,22 @@
+name: Windows
+
+on:
+  push:
+  pull_request:
+  schedule:
+    # min hours day(month) month day(week)
+    - cron: '0 0 7,22 * *'
+
+jobs:
+  windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install Bazel
+        run: |
+          choco install bazel
+          bazel --version
+      - name: Build
+        run: bazel build --cxxopt="-std:c++17" //...
+      - name: Test
+        run: bazel test --cxxopt="-std:c++17" //...
