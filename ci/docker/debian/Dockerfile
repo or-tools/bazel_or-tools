@@ -23,6 +23,7 @@ WORKDIR /home/lib
 COPY . .
 
 FROM devel as build
+RUN bazel version
 RUN bazel build --curses=no --cxxopt=-std=c++17 --copt='-Wno-sign-compare' //main:template
 
 FROM build as test
