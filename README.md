@@ -1,7 +1,16 @@
 [![Status][linux_svg]][linux_link]
+[![Status][macos_svg]][macos_link]
+[![Status][windows_svg]][windows_link]
+[![Status][docker_svg]][docker_link]
 
-[linux_svg]: https://github.com/or-tools/bazel_or-tools/workflows/Docker/badge.svg?branch=main
-[linux_link]: https://github.com/or-tools/bazel_or-tools/actions?query=workflow%3A"Docker"
+[linux_svg]: https://github.com/or-tools/bazel_or-tools/actions/workflows/linux.yml/badge.svg
+[linux_link]: https://github.com/or-tools/bazel_or-tools/actions/workflows/linux.yml
+[macos_svg]: https://github.com/or-tools/bazel_or-tools/actions/workflows/macos.yml/badge.svg
+[macos_link]: https://github.com/or-tools/bazel_or-tools/actions/workflows/macos.yml
+[windows_svg]: https://github.com/or-tools/bazel_or-tools/actions/workflows/windows.yml/badge.svg
+[windows_link]: https://github.com/or-tools/bazel_or-tools/actions/workflows/windows.yml
+[docker_svg]: https://github.com/or-tools/bazel_or-tools/actions/workflows/docker.yml/badge.svg
+[docker_link]: https://github.com/or-tools/bazel_or-tools/actions/workflows/docker.yml
 
 # Introduction
 <nav for="bazel"> |
