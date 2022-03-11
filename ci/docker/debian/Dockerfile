@@ -1,7 +1,7 @@
 # Create a virtual environment with all tools installed
 # ref: https://hub.docker.com/_/debian
 FROM debian:latest AS env
-LABEL maintainer="corentinl@google.com"
+
 # Install system build dependencies
 ENV PATH=/usr/local/bin:$PATH
 RUN apt-get update -qq \
@@ -19,12 +19,12 @@ RUN apt-get update -qq \
 && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 FROM env AS devel
-WORKDIR /home/lib
+WORKDIR /home/project
 COPY . .
 
 FROM devel as build
 RUN bazel version
-RUN bazel build -c opt --cxxopt=-std=c++17 //main:template
+RUN bazel build -c opt --cxxopt=-std=c++20 //main:template
 
 FROM build as test
-RUN bazel test --test_output=all -c opt --cxxopt=-std=c++17 //main:all
+RUN bazel test --test_output=all -c opt --cxxopt=-std=c++20 //main:all
