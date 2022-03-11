@@ -30,22 +30,22 @@ Take a look at the [WORKSPACE](WORKSPACE) file.
 # Build
 On any *\*NIX* (MacOS, GNU/Linux) platform:
 ```sh
-bazel build --cxxopt=-std=c++17 //main:template
+bazel build --cxxopt=-std=c++20 //main:template
 ```
 
 On Windows when using *MSVC 2019+*:
 ```cmd
-bazel build --cxxopt="-std:c++17" ///main:template
+bazel build --cxxopt="-std:c++20" ///main:template
 ```
 
 # Test
 On any *\*NIX* (MacOS, GNU/Linux) platform:
 ```sh
-bazel test --cxxopt=-std=c++17 //main:template
+bazel test --cxxopt=-std=c++20 //main:template
 ```
 
 On Windows when using *MSVC 2019+*:
 ```cmd
-bazel test --cxxopt="-std:c++17" ///main:template
+bazel test --cxxopt="-std:c++20" ///main:template
 ```
 

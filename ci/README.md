@@ -1,18 +1,21 @@
 # CI: Makefile/Docker testing
-To test the build on various distro, I'm using docker containers and a Makefile for orchestration.
+
+To test the build on various distro, I'm using docker containers and a Makefile
+for orchestration.
 
 pros:
-* You are independent of third party CI runner config (e.g. github actions runners or Travis-CI VM images).
-* You can run it locally on your linux system.
-* Most CI provide runner with docker and Makefile installed (e.g. tarvis-ci [minimal images](https://docs.travis-ci.com/user/languages/minimal-and-generic/).
+* You are independent of third party CI runner VM images (e.g. [github actions/virtual-environments](https://github.com/actions/virtual-environments)).
+* You can run it locally on any host having a linux docker image support.
+* Most CI provide runner with docker and Makefile installed.
 
 cons:
 * Only GNU/Linux distro supported.
-* Could take ~3.5GiB for each distro
-  * ~1GiB OS + C++/CMake tools
+* Could take few GiB (~30 GiB for all distro and all languages)
+  * ~500MiB OS + C++/CMake tools,
   * ~2GiB bazel build
 
-# Usage
+## Usage
+
 To get the help simply type:
 ```sh
 make
@@ -23,13 +26,14 @@ note: you can also use from top directory
 make --directory=ci
 ```
 
-## Example
+### Example
 For example to test inside an `Ubuntu` container:
 ```sh
 make ubuntu_test
 ```
 
-# Docker Layers
-Dockerfile is splitted in several stages.
+## Docker Layers
 
-![docker](doc/docker.svg)
+Dockerfile is split in several stages.
+
+![docker](docs/docker.svg)
