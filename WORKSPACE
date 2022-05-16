@@ -106,7 +106,7 @@ cc_library(
 
 git_repository(
     name = "com_google_ortools",
-    #branch = "master",
+    #branch = "main",
     commit = "525162feaadaeef640783b2eaea38cf4b623877f",
     shallow_since = "1647023481 +0100",
     #tag = "v9.3",
