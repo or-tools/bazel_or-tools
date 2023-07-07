@@ -1,4 +1,4 @@
-# ref: https://github.com/actions/virtual-environments
+# ref: https://github.com/actions/runner-images
 name: amd64 Windows
 
 on: [push, pull_request]
@@ -14,22 +14,22 @@ jobs:
     runs-on: ${{ matrix.runner }}
     #runs-on: windows-latest
     steps:
-    - uses: actions/checkout@v3
-    - name: Install Bazel
-      run: choco install bazel
-    - name: Check Bazel
-      run: bazel version
-    - name: Build
-      run: >
-        bazel build
-        -c opt
-        --cxxopt="-std:c++20"
-        --subcommands=true
-        ...
-    - name: Test
-      run: >
-        bazel test
-        -c opt
-        --cxxopt="-std:c++20"
-        --test_output=all
-        ...
+      - uses: actions/checkout@v3
+      - name: Install Bazel
+        run: choco install bazel
+      - name: Check Bazel
+        run: bazel version
+      - name: Build
+        run: >
+          bazel build
+          -c opt
+          --cxxopt="/std:c++20"
+          --subcommands=true
+          ...
+      - name: Test
+        run: >
+          bazel test
+          -c opt
+          --cxxopt="/std:c++20"
+          --test_output=errors
+          ...
