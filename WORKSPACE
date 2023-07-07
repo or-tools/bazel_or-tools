@@ -3,67 +3,93 @@ workspace(name = "org_ortools_template")
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 load("@bazel_tools//tools/build_defs/repo:git.bzl", "git_repository", "new_git_repository")
 
-# Bazel Skylib rules.
+# Bazel Extensions
+## Bazel Skylib rules.
 git_repository(
     name = "bazel_skylib",
-    tag = "1.2.1",
+    tag = "1.4.1",
     remote = "https://github.com/bazelbuild/bazel-skylib.git",
 )
 load("@bazel_skylib//:workspace.bzl", "bazel_skylib_workspace")
 bazel_skylib_workspace()
 
-# Bazel Platforms rules.
+## Bazel rules.
 git_repository(
     name = "platforms",
-    tag = "0.0.5",
+    tag = "0.0.6",
     remote = "https://github.com/bazelbuild/platforms.git",
 )
 
-# Bazel Python rules.
+git_repository(
+    name = "rules_cc",
+    tag = "0.0.6",
+    remote = "https://github.com/bazelbuild/rules_cc.git",
+)
+
+git_repository(
+    name = "rules_proto",
+    tag = "5.3.0-21.7",
+    remote = "https://github.com/bazelbuild/rules_proto.git",
+)
+
+git_repository(
+    name = "rules_jvm_external",
+    tag = "5.2",
+    #tag = "5.3",
+    remote = "https://github.com/bazelbuild/rules_jvm_external.git",
+)
+
+git_repository(
+    name = "contrib_rules_jvm",
+    tag = "v0.9.0",
+    #tag = "v0.14.0",
+    remote = "https://github.com/bazel-contrib/rules_jvm.git",
+)
+
 git_repository(
     name = "rules_python",
-    tag = "0.6.0",
+    tag = "0.23.1",
     remote = "https://github.com/bazelbuild/rules_python.git",
 )
 
-# Abseil-cpp
+# Dependencies
+## ZLIB
+new_git_repository(
+    name = "zlib",
+    build_file = "@com_google_protobuf//:third_party/zlib.BUILD",
+    tag = "v1.2.13",
+    remote = "https://github.com/madler/zlib.git",
+)
+
+## Re2
+git_repository(
+    name = "com_google_re2",
+    tag = "2023-07-01",
+    remote = "https://github.com/google/re2.git",
+)
+
+## Abseil-cpp
 git_repository(
     name = "com_google_absl",
-    tag = "20211102.0",
+    tag = "20230125.3",
+    patches = ["//patches:abseil-cpp-20230125.3.patch"],
+    patch_args = ["-p1"],
     remote = "https://github.com/abseil/abseil-cpp.git",
 )
 
-# Protobuf
+## Protobuf
 git_repository(
     name = "com_google_protobuf",
-    tag = "v3.19.4",
+    tag = "v23.3",
+    patches = ["//patches:protobuf-v23.3.patch"],
+    patch_args = ["-p1"],
     remote = "https://github.com/protocolbuffers/protobuf.git",
 )
 # Load common dependencies.
 load("@com_google_protobuf//:protobuf_deps.bzl", "protobuf_deps")
 protobuf_deps()
 
-# ZLIB
-new_git_repository(
-    name = "zlib",
-    build_file = "@com_google_protobuf//:third_party/zlib.BUILD",
-    tag = "v1.2.11",
-    remote = "https://github.com/madler/zlib.git",
-)
-
-git_repository(
-    name = "com_google_re2",
-    patches = ["@com_google_ortools//bazel:re2.patch"],
-    tag = "2022-02-01",
-    remote = "https://github.com/google/re2.git",
-)
-
-git_repository(
-    name = "com_google_googletest",
-    tag = "release-1.11.0",
-    remote = "https://github.com/google/googletest.git",
-)
-
+## Solvers
 http_archive(
     name = "glpk",
     build_file = "//bazel:glpk.BUILD",
@@ -104,11 +130,23 @@ cc_library(
 )
 """)
 
+## Testing
+git_repository(
+    name = "com_google_googletest",
+    tag = "v1.13.0",
+    remote = "https://github.com/google/googletest.git",
+)
+
+git_repository(
+    name = "com_google_benchmark",
+    tag = "v1.8.1",
+    remote = "https://github.com/google/benchmark.git",
+)
+
+
 git_repository(
     name = "com_google_ortools",
-    #branch = "main",
-    commit = "525162feaadaeef640783b2eaea38cf4b623877f",
-    shallow_since = "1647023481 +0100",
-    #tag = "v9.3",
+    branch = "main",
+    #tag = "v9.6",
     remote = "https://github.com/google/or-tools.git",
 )
