@@ -17,6 +17,7 @@ jobs:
       - uses: actions/checkout@v4
       - name: Check docker
         run: |
+          docker version
           docker info
           docker buildx ls
       - name: Build env image
