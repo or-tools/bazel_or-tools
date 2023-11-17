@@ -7,7 +7,7 @@ load("@bazel_tools//tools/build_defs/repo:git.bzl", "git_repository", "new_git_r
 ## Bazel Skylib rules.
 git_repository(
     name = "bazel_skylib",
-    tag = "1.4.1",
+    tag = "1.4.2",
     remote = "https://github.com/bazelbuild/bazel-skylib.git",
 )
 load("@bazel_skylib//:workspace.bzl", "bazel_skylib_workspace")
@@ -16,13 +16,13 @@ bazel_skylib_workspace()
 ## Bazel rules.
 git_repository(
     name = "platforms",
-    tag = "0.0.6",
+    tag = "0.0.7",
     remote = "https://github.com/bazelbuild/platforms.git",
 )
 
 git_repository(
     name = "rules_cc",
-    tag = "0.0.6",
+    tag = "0.0.9",
     remote = "https://github.com/bazelbuild/rules_cc.git",
 )
 
@@ -30,6 +30,13 @@ git_repository(
     name = "rules_proto",
     tag = "5.3.0-21.7",
     remote = "https://github.com/bazelbuild/rules_proto.git",
+)
+
+git_repository(
+    name = "rules_java",
+    tag = "6.4.0",
+    #tag = "6.5.1",
+    remote = "https://github.com/bazelbuild/rules_java.git",
 )
 
 git_repository(
@@ -48,40 +55,31 @@ git_repository(
 
 git_repository(
     name = "rules_python",
-    tag = "0.23.1",
+    tag = "0.26.0",
     remote = "https://github.com/bazelbuild/rules_python.git",
 )
 
+load("@rules_python//python:repositories.bzl", "py_repositories")
+py_repositories()
+
 # Dependencies
-## ZLIB
-new_git_repository(
-    name = "zlib",
-    build_file = "@com_google_protobuf//:third_party/zlib.BUILD",
-    tag = "v1.2.13",
-    remote = "https://github.com/madler/zlib.git",
-)
-
-## Re2
-git_repository(
-    name = "com_google_re2",
-    tag = "2023-07-01",
-    remote = "https://github.com/google/re2.git",
-)
-
 ## Abseil-cpp
 git_repository(
     name = "com_google_absl",
-    tag = "20230125.3",
-    patches = ["//patches:abseil-cpp-20230125.3.patch"],
+    tag = "20230802.1",
+    patches = ["//patches:abseil-cpp-20230802.1.patch"],
     patch_args = ["-p1"],
     remote = "https://github.com/abseil/abseil-cpp.git",
 )
 
 ## Protobuf
+# proto_library, cc_proto_library, and java_proto_library rules implicitly
+# depend on @com_google_protobuf for protoc and proto runtimes.
+# This statement defines the @com_google_protobuf repo.
 git_repository(
     name = "com_google_protobuf",
-    tag = "v23.3",
-    patches = ["//patches:protobuf-v23.3.patch"],
+    tag = "v25.0",
+    patches = ["//patches:protobuf-v25.0.patch"],
     patch_args = ["-p1"],
     remote = "https://github.com/protocolbuffers/protobuf.git",
 )
@@ -89,28 +87,21 @@ git_repository(
 load("@com_google_protobuf//:protobuf_deps.bzl", "protobuf_deps")
 protobuf_deps()
 
-## Solvers
-http_archive(
-    name = "glpk",
-    build_file = "//bazel:glpk.BUILD",
-    sha256 = "4a1013eebb50f728fc601bdd833b0b2870333c3b3e5a816eeba921d95bec6f15",
-    url = "http://ftp.gnu.org/gnu/glpk/glpk-5.0.tar.gz",
-)
-
 http_archive(
     name = "bliss",
-    build_file = "@com_google_ortools//bazel:bliss.BUILD",
-    patches = ["@com_google_ortools//bazel:bliss-0.73.patch"],
+    build_file = "//bazel:bliss.BUILD",
+    patches = ["//bazel:bliss-0.73.patch"],
     sha256 = "f57bf32804140cad58b1240b804e0dbd68f7e6bf67eba8e0c0fa3a62fd7f0f84",
-    url = "http://www.tcs.hut.fi/Software/bliss/bliss-0.73.zip",
+    url = "https://github.com/google/or-tools/releases/download/v9.0/bliss-0.73.zip",
+    #url = "http://www.tcs.hut.fi/Software/bliss/bliss-0.73.zip",
 )
 
 new_git_repository(
     name = "scip",
-    build_file = "@com_google_ortools//bazel:scip.BUILD",
-    patches = ["@com_google_ortools//bazel:scip.patch"],
+    build_file = "//bazel:scip.BUILD.bazel",
+    patches = ["//bazel:scip.patch"],
     patch_args = ["-p1"],
-    tag = "v800",
+    tag = "v804",
     remote = "https://github.com/scipopt/scip.git",
 )
 
@@ -126,27 +117,15 @@ cc_library(
     srcs = [],
     includes = ['.'],
     hdrs = glob(['Eigen/**']),
+    defines = ["EIGEN_MPL2_ONLY",],
     visibility = ['//visibility:public'],
 )
-""")
-
-## Testing
-git_repository(
-    name = "com_google_googletest",
-    tag = "v1.13.0",
-    remote = "https://github.com/google/googletest.git",
+"""
 )
-
-git_repository(
-    name = "com_google_benchmark",
-    tag = "v1.8.1",
-    remote = "https://github.com/google/benchmark.git",
-)
-
 
 git_repository(
     name = "com_google_ortools",
-    branch = "main",
-    #tag = "v9.6",
+    #branch = "main",
+    tag = "v9.8",
     remote = "https://github.com/google/or-tools.git",
 )
