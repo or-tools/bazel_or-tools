@@ -1,14 +1,15 @@
 # ref: https://github.com/actions/runner-images
 name: amd64 Linux
 
-on: [push, pull_request]
+on: [push, pull_request, workflow_dispatch]
 
+# Building using the github runner environement directly.
 jobs:
-  # Building using the github runner environement directly.
-  linux:
+  native:
+    name: Linux • Bazel
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Install Bazel
         run: |
           curl -fsSL https://bazel.build/bazel-release.pub.gpg | gpg --dearmor > bazel.gpg
@@ -16,19 +17,17 @@ jobs:
           echo "deb [arch=amd64] https://storage.googleapis.com/bazel-apt stable jdk1.8" | sudo tee /etc/apt/sources.list.d/bazel.list
           sudo apt-get update
           sudo apt-get install bazel
-      - name: Check bazel
-        run:  bazel version
+      - name: Check Bazel
+        run: bazel version
       - name: Build
         run: >
           bazel build
           -c opt
-          --cxxopt="-std=c++20"
-          --subcommands=true
+          --subcommands=pretty_print
           ...
       - name: Test
         run: >
           bazel test
           -c opt
-          --cxxopt="-std=c++20"
           --test_output=errors
           ...

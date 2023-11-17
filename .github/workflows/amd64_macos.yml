@@ -1,14 +1,15 @@
 # ref: https://github.com/actions/runner-images
-name: amd64 macOS
+name: amd64 MacOS
 
-on: [push, pull_request]
+on: [push, pull_request, workflow_dispatch]
 
+# Building using the github runner environement directly.
 jobs:
-  # Building using the github runner environement directly.
-  macos:
+  native:
+    name: MacOS • Bazel
     runs-on: macos-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Install Bazel
         run: |
           brew update
@@ -20,13 +21,11 @@ jobs:
         run: >
           bazel build
           -c opt
-          --cxxopt="-std=c++20"
-          --subcommands=true
+          --subcommands=pretty_print
           ...
       - name: Test
         run: >
           bazel test
           -c opt
-          --cxxopt="-std=c++20"
           --test_output=errors
           ...

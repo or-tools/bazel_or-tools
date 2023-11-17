@@ -1,20 +1,20 @@
 # ref: https://github.com/actions/runner-images
 name: amd64 Windows
 
-on: [push, pull_request]
+on: [push, pull_request, workflow_dispatch]
 
+# Building using the github runner environement directly.
 jobs:
-  # Building using the github runner environement directly.
-  windows:
+  native:
     strategy:
       matrix:
         # VS-2022 broken see https://github.com/bazelbuild/bazel/issues/18592
-        runner: [windows-2022, windows-2019]
+        runner: [windows-2022]
       fail-fast: false # Don't cancel all jobs if one fails.
+    name: ${{ matrix.runner }} • Bazel
     runs-on: ${{ matrix.runner }}
-    #runs-on: windows-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Install Bazel
         run: choco install bazel
       - name: Check Bazel
@@ -23,13 +23,11 @@ jobs:
         run: >
           bazel build
           -c opt
-          --cxxopt="/std:c++20"
-          --subcommands=true
+          --subcommands=pretty_print
           ...
       - name: Test
         run: >
           bazel test
           -c opt
-          --cxxopt="/std:c++20"
           --test_output=errors
           ...
