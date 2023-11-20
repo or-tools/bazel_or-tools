@@ -26,7 +26,12 @@ COPY . .
 
 FROM devel as build
 RUN bazel version
-RUN bazel build -c opt --cxxopt=-std=c++20 //main:template
+RUN bazel build \
+ -c opt \
+ //main:all
 
 FROM build as test
-RUN bazel test --test_output=all -c opt --cxxopt=-std=c++20 //main:all
+RUN bazel test \
+ -c opt \
+ --test_output=all \
+ //main:all

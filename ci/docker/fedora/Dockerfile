@@ -38,11 +38,10 @@ FROM devel AS build
 RUN bazel version
 RUN bazel build \
  -c opt \
- --subcommands=true \
- //main:template
+ //main:all
 
-FROM build AS test
+FROM build as test
 RUN bazel test \
  -c opt \
- --test_output=errors \
- //main/...
+ --test_output=all \
+ //main:all
