@@ -5,7 +5,7 @@ FROM alpine:edge AS env
 # Install system build dependencies
 ENV PATH=/usr/local/bin:$PATH
 RUN apk add --no-cache git build-base linux-headers zlib-dev
-RUN apk add --no-cache -X http://dl-cdn.alpinelinux.org/alpine/edge/testing bazel4
+RUN apk add --no-cache -X http://dl-cdn.alpinelinux.org/alpine/edge/testing bazel6
 
 # Install OpenJDK17
 # note: default-jvm will now point to java-17-openjdk
@@ -23,7 +23,14 @@ COPY . .
 
 FROM devel as build
 RUN bazel version
-RUN bazel build -c opt --host_javabase=@local_jdk//:jdk --cxxopt=-std=c++20 //main:template
+RUN bazel build \
+ -c opt \
+ --host_javabase=@local_jdk//:jdk \
+ //main:all
 
 FROM build as test
-RUN bazel test --test_output=all -c opt --host_javabase=@local_jdk//:jdk --cxxopt=-std=c++20 //main:all
+RUN bazel test \
+ -c opt \
+ --host_javabase=@local_jdk//:jdk \
+ --test_output=all \
+ //main:all
