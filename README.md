@@ -37,7 +37,7 @@ On any *\*NIX* (MacOS, GNU/Linux) platform:
 bazel build --cxxopt=-std=c++20 //main:template
 ```
 
-On Windows when using *MSVC 2019+*:
+On Windows when using *MSVC 2022+*:
 ```cmd
 bazel build --cxxopt="-std:c++20" ///main:template
 ```
@@ -48,7 +48,7 @@ On any *\*NIX* (MacOS, GNU/Linux) platform:
 bazel test --cxxopt=-std=c++20 //main:template
 ```
 
-On Windows when using *MSVC 2019+*:
+On Windows when using *MSVC 2022+*:
 ```cmd
 bazel test --cxxopt="-std:c++20" ///main:template
 ```

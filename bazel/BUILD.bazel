@@ -11,23 +11,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-load("@rules_python//python:pip.bzl", "compile_pip_requirements")
-
 exports_files([
-    "gtest.BUILD",
-    "glpk.BUILD",
-    "pcre2.BUILD",
-    "pcre2.patch",
-    "re2.patch",
+    "bliss.BUILD.bazel",
+    "bliss-0.73.patch",
     "scip.BUILD.bazel",
     "scip.patch",
-    "swig.BUILD",
-    "swig.patch",
-    "bliss.BUILD",
-    "bliss-0.73.patch",
-    "archive_helper.bzl",
-    "notebook_requirements.in",
-    "notebook_requirements.txt",
-    "ortools_requirements.in",
-    "ortools_requirements.txt",
 ])
