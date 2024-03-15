@@ -10,11 +10,6 @@ jobs:
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Install Bazel
-        run: |
-          brew update
-          brew unlink bazelisk
-          brew install bazel
       - name: Check Bazel
         run: bazel version
       - name: Build
