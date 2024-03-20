@@ -14,11 +14,13 @@
 // Minimal example to call the GLOP solver.
 // [START program]
 // [START import]
+#include "ortools/init/init.h"
 #include "ortools/linear_solver/linear_solver.h"
 // [END import]
 
 namespace operations_research {
 void SimpleLpProgram() {
+  LOG(INFO) << "Google OR-Tools version : " << OrToolsVersion::VersionString();
   // [START solver]
   // Create the linear solver with the GLOP backend.
   MPSolver* solver = MPSolver::CreateSolver("GLOP");
