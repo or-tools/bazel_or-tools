@@ -1,13 +1,24 @@
 load("@rules_cc//cc:defs.bzl", "cc_binary", "cc_test")
 
 cc_binary(
-    name = "basic_example",
-    srcs = ["basic_example.cc"],
-    deps = [
-        "@com_google_ortools//ortools/base",
-        "@com_google_ortools//ortools/init",
-        "@com_google_ortools//ortools/linear_solver",
-        "@com_google_ortools//ortools/linear_solver:linear_solver_cc_proto",
-    ],
+  name = "basic_example",
+  srcs = ["basic_example.cc"],
+  deps = [
+    "@com_google_ortools//ortools/base",
+    "@com_google_ortools//ortools/init",
+    "@com_google_ortools//ortools/linear_solver",
+    "@com_google_ortools//ortools/linear_solver:linear_solver_cc_proto",
+  ],
 )
 
+cc_test(
+  name = "basic_example_test",
+  srcs = ["basic_example.cc"],
+  deps = [
+    ":basic_example",
+    "@com_google_ortools//ortools/base",
+    "@com_google_ortools//ortools/init",
+    "@com_google_ortools//ortools/linear_solver",
+    "@com_google_ortools//ortools/linear_solver:linear_solver_cc_proto",
+  ],
+)

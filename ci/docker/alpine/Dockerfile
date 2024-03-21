@@ -26,11 +26,11 @@ RUN bazel version
 RUN bazel build \
  -c opt \
  --host_javabase=@local_jdk//:jdk \
- //main:all
+ ...
 
 FROM build as test
 RUN bazel test \
  -c opt \
  --host_javabase=@local_jdk//:jdk \
  --test_output=all \
- //main:all
+ ...
