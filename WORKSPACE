@@ -16,7 +16,7 @@ bazel_skylib_workspace()
 ## Bazel rules.
 git_repository(
     name = "platforms",
-    tag = "0.0.8",
+    tag = "0.0.9",
     remote = "https://github.com/bazelbuild/platforms.git",
 )
 
@@ -32,13 +32,22 @@ git_repository(
     remote = "https://github.com/bazelbuild/rules_proto.git",
 )
 
+git_repository(
+    name = "rules_python",
+    tag = "0.31.0",
+    remote = "https://github.com/bazelbuild/rules_python.git",
+)
+
+load("@rules_python//python:repositories.bzl", "py_repositories")
+py_repositories()
+
 # Dependencies
 
 ## Abseil-cpp
 git_repository(
     name = "com_google_absl",
-    tag = "20240116.1",
-    patches = ["//patches:abseil-cpp-20240116.1.patch"],
+    tag = "20240116.2",
+    patches = ["//patches:abseil-cpp-20240116.2.patch"],
     patch_args = ["-p1"],
     remote = "https://github.com/abseil/abseil-cpp.git",
 )
@@ -49,14 +58,20 @@ git_repository(
 # This statement defines the @com_google_protobuf repo.
 git_repository(
     name = "com_google_protobuf",
-    patches = ["//patches:protobuf-v25.3.patch"],
+    patches = ["//patches:protobuf-v26.1.patch"],
     patch_args = ["-p1"],
-    tag = "v25.3",
+    tag = "v26.1",
     remote = "https://github.com/protocolbuffers/protobuf.git",
 )
 # Load common dependencies.
 load("@com_google_protobuf//:protobuf_deps.bzl", "protobuf_deps")
 protobuf_deps()
+
+load("@com_google_protobuf//bazel:system_python.bzl", "system_python")
+system_python(
+    name = "system_python",
+    minimum_python_version = "3.8",
+)
 
 http_archive(
     name = "bliss",
@@ -70,9 +85,9 @@ http_archive(
 new_git_repository(
     name = "scip",
     build_file = "//bazel:scip.BUILD.bazel",
-    patches = ["//bazel:scip.patch"],
+    patches = ["//bazel:scip-v900.patch"],
     patch_args = ["-p1"],
-    tag = "v810",
+    tag = "v900",
     remote = "https://github.com/scipopt/scip.git",
 )
 
@@ -97,14 +112,14 @@ cc_library(
 git_repository(
     name = "com_google_ortools",
     #branch = "main",
-    tag = "v9.9",
+    tag = "v9.10",
     remote = "https://github.com/google/or-tools.git",
 )
 
 ## Testing
 git_repository(
     name = "com_google_googletest",
-    tag = "v1.13.0",
+    tag = "v1.14.0",
     remote = "https://github.com/google/googletest.git",
 )
 
