@@ -66,6 +66,7 @@ http_archive(
     url = "https://github.com/google/or-tools/releases/download/v9.0/bliss-0.73.zip",
     #url = "http://www.tcs.hut.fi/Software/bliss/bliss-0.73.zip",
 )
+
 new_git_repository(
     name = "scip",
     build_file = "//bazel:scip.BUILD.bazel",

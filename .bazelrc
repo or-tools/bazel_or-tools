@@ -26,6 +26,13 @@ build:macos --cxxopt="-std=c++17"  --cxxopt=-Wno-sign-compare --cxxopt=-mmacos-v
 build:macos --host_cxxopt="-std=c++17" --host_cxxopt=-Wno-sign-compare --host_cxxopt=-mmacos-version-min=10.15
 build:windows --cxxopt="/std:c++20" --host_cxxopt="/std:c++20"
 
+# Enable the runfiles symlink tree on Windows. This makes it possible to build
+# the pip package on Windows without an intermediate data-file archive, as the
+# build_pip_package script in its current form (as of Aug 2023) uses the
+# runfiles symlink tree to decide what to put into the Python wheel.
+startup --windows_enable_symlinks
+build:windows --enable_runfiles
+
 # Print command lines for build commands.
 # build --subcommands=pretty_print
 
