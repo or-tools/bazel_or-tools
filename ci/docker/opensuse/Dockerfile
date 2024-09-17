@@ -13,13 +13,13 @@ FROM env AS devel
 WORKDIR /home/project
 COPY . .
 
-FROM devel as build
+FROM devel AS build
 RUN bazel version
 RUN bazel build \
  -c opt \
  ...
 
-FROM build as test
+FROM build AS test
 RUN bazel test \
  -c opt \
  --test_output=all \

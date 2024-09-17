@@ -40,7 +40,7 @@ RUN bazel build \
  -c opt \
  ...
 
-FROM build as test
+FROM build AS test
 RUN bazel test \
  -c opt \
  --test_output=all \

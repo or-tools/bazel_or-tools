@@ -21,14 +21,14 @@ FROM env AS devel
 WORKDIR /home/project
 COPY . .
 
-FROM devel as build
+FROM devel AS build
 RUN bazel version
 RUN bazel build \
  -c opt \
  --host_javabase=@local_jdk//:jdk \
  ...
 
-FROM build as test
+FROM build AS test
 RUN bazel test \
  -c opt \
  --host_javabase=@local_jdk//:jdk \
