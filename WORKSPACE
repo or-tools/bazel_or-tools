@@ -16,7 +16,7 @@ bazel_skylib_workspace()
 ## Bazel rules.
 git_repository(
     name = "platforms",
-    tag = "0.0.9",
+    tag = "0.0.10",
     remote = "https://github.com/bazelbuild/platforms.git",
 )
 
@@ -34,7 +34,7 @@ git_repository(
 
 git_repository(
     name = "rules_python",
-    tag = "0.31.0",
+    tag = "0.34.0",
     remote = "https://github.com/bazelbuild/rules_python.git",
 )
 
@@ -46,8 +46,8 @@ py_repositories()
 ## Abseil-cpp
 git_repository(
     name = "com_google_absl",
-    tag = "20240116.2",
-    patches = ["//patches:abseil-cpp-20240116.2.patch"],
+    tag = "20240722.0",
+    patches = ["//patches:abseil-cpp-20240722.0.patch"],
     patch_args = ["-p1"],
     remote = "https://github.com/abseil/abseil-cpp.git",
 )
@@ -112,7 +112,7 @@ cc_library(
 git_repository(
     name = "com_google_ortools",
     #branch = "main",
-    tag = "v9.10",
+    tag = "v9.11",
     remote = "https://github.com/google/or-tools.git",
 )
 
