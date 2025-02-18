@@ -3,31 +3,62 @@ name: amd64 Linux
 
 on: [push, pull_request, workflow_dispatch]
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 # Building using the github runner environement directly.
 jobs:
-  native:
-    name: Linux • Bazel
+  bzlmod:
+    name: Linux•Bazel(bzlmod)
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Install Bazel
-        run: |
-          curl -fsSL https://bazel.build/bazel-release.pub.gpg | gpg --dearmor > bazel.gpg
-          sudo mv bazel.gpg /etc/apt/trusted.gpg.d/
-          echo "deb [arch=amd64] https://storage.googleapis.com/bazel-apt stable jdk1.8" | sudo tee /etc/apt/sources.list.d/bazel.list
-          sudo apt-get update
-          sudo apt-get install bazel
-      - name: Check Bazel
-        run: bazel version
+      - uses: bazel-contrib/setup-bazel@0.8.4
+        with:
+          bazelisk-cache: true
+          disk-cache: ${{ github.workflow }}
+          repository-cache: true
+      - name: Show Bazel version
+        run: bazel --version
       - name: Build
         run: >
           bazel build
           -c opt
           --subcommands=pretty_print
-          ...
+          --enable_bzlmod
+          //...
       - name: Test
         run: >
           bazel test
           -c opt
           --test_output=errors
-          ...
+          --enable_bzlmod
+          //...
+
+  workspace:
+    name: Linux•Bazel(workspace)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: bazel-contrib/setup-bazel@0.8.4
+        with:
+          bazelisk-cache: true
+          disk-cache: ${{ github.workflow }}
+          repository-cache: true
+      - name: Show Bazel version
+        run: bazel --version
+      - name: Build
+        run: >
+          bazel build
+          -c opt
+          --subcommands=pretty_print
+          --noenable_bzlmod --enable_workspace
+          //...
+      - name: Test
+        run: >
+          bazel test
+          -c opt
+          --test_output=errors
+          --noenable_bzlmod --enable_workspace
+          //...
