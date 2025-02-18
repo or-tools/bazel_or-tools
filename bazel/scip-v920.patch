@@ -1,0 +1,180 @@
+diff --git a/src/scip/buildflags.h b/src/scip/buildflags.h
+index c686abcd20..1ea6a4fbf4 100644
+--- a/src/scip/buildflags.h
++++ b/src/scip/buildflags.h
+@@ -0,0 +1,86 @@
++/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
++/*                                                                           */
++/*                  This file is part of the program and library             */
++/*         SCIP --- Solving Constraint Integer Programs                      */
++/*                                                                           */
++/*  Copyright (c) 2002-2024 Zuse Institute Berlin (ZIB)                      */
++/*                                                                           */
++/*  Licensed under the Apache License, Version 2.0 (the "License");          */
++/*  you may not use this file except in compliance with the License.         */
++/*  You may obtain a copy of the License at                                  */
++/*                                                                           */
++/*      http://www.apache.org/licenses/LICENSE-2.0                           */
++/*                                                                           */
++/*  Unless required by applicable law or agreed to in writing, software      */
++/*  distributed under the License is distributed on an "AS IS" BASIS,        */
++/*  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. */
++/*  See the License for the specific language governing permissions and      */
++/*  limitations under the License.                                           */
++/*                                                                           */
++/*  You should have received a copy of the Apache-2.0 license                */
++/*  along with SCIP; see the file LICENSE. If not visit scipopt.org.         */
++/*                                                                           */
++/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
++
++#if defined(__linux__)
++#define SCIP_OSTYPE "Linux"
++#elif defined(__APPLE__)
++#define SCIP_OSTYPE "Darwin"
++#elif defined(__FreeBSD__)
++#define SCIP_OSTYPE "FreeBSD"
++#elif defined(__NetBSD__)
++#define SCIP_OSTYPE "NetBSD"
++#elif defined(__OpenBSD__)
++#define SCIP_OSTYPE "OpenBSD"
++#elif defined(_MSC_VER) || defined(__MINGW64__)
++#define SCIP_OSTYPE "Windows"
++#else
++#define SCIP_OSTYPE "UnknownArch"
++#endif
++
++#if defined(__clang__)
++#define SCIP_COMP "CLang"
++#elif defined(__GNUC__) || defined(__GNUG__)
++#define SCIP_COMP "GCC"
++#elif defined(_MSC_VER)
++#define SCIP_COMP "VisualStudio"
++#else
++#define SCIP_COMP "UnknownCompiler"
++#endif
++
++#if defined(__x86_64__) || defined(_M_X64)
++#define SCIP_ARCH "x86_64"
++#elif defined(__aarch64__)
++#define SCIP_ARCH "arm64"
++#else
++#define SCIP_ARCH "UnknownArch"
++#endif
++
++#define SCIP_BUILDFLAGS				\
++  "ARCH=" SCIP_ARCH "\n "			\
++  "OSTYPE=" SCIP_OSTYPE "\n "			\
++  "COMP=" SCIP_COMP "\n "			\
++  "BUILD=Release\n "				\
++  "DEBUGSOL=OFF\n "				\
++  "EXPRINT=none\n "				\
++  "SYM=none\n "					\
++  "GMP=OFF\n "					\
++  "IPOPT=OFF\n "				\
++  "WORHP=OFF\n "				\
++  "LPS=spx2\n "					\
++  "LPSCHECK=OFF\n "				\
++  "NOBLKBUFMEM=OFF\n "				\
++  "NOBLKMEM=OFF\n "				\
++  "NOBUFMEM=OFF\n "				\
++  "THREADSAFE=ON; "				\
++  "FORCE\n "					\
++  "READLINE=OFF\n "				\
++  "SANITIZE_ADDRESS=OFF\n "			\
++  "SANITIZE_MEMORY=OFF\n "			\
++  "SANITIZE_UNDEFINED=OFF\n "			\
++  "SANITIZE_THREAD=OFF\n "			\
++  "SHARED=OFF\n "				\
++  "VERSION=9.2.0.0\n "				\
++  "API_VERSION=115\n "				\
++  "ZIMPL=OFF\n "				\
++  "ZLIB=ON"
+diff --git a/src/scip/config.h b/src/scip/config.h
+new file mode 100644
+index 0000000000..871fde8e55
+--- /dev/null
++++ b/src/scip/config.h
+@@ -0,0 +1,31 @@
++#ifndef __CONFIG_H__
++#define __CONFIG_H__
++
++#define CMAKE_BUILD_TYPE "Release"
++#define SCIP_VERSION_MAJOR 9
++#define SCIP_VERSION_MINOR 2
++#define SCIP_VERSION_PATCH 0
++#define SCIP_VERSION_SUB 0
++#define SCIP_VERSION_API 115
++/* #undef BMS_NOBLOCKMEM */
++/* #undef SCIP_NOBUFFERMEM */
++/* #undef WITH_DEBUG_SOLUTION */
++/* #undef SCIP_NO_SIGACTION */
++/* #undef SCIP_NO_STRTOK_R */
++/* #undef TPI_NONE */
++/* #undef TPI_OMP */
++#define SCIP_THREADSAFE
++#define WITH_SCIPDEF
++/* #undef SCIP_WITH_LAPACK */
++/* #undef SCIP_WITH_PAPILO */
++#define SCIP_WITH_ZLIB
++/* #undef SCIP_WITH_READLINE */
++/* #undef SCIP_WITH_GMP */
++/* #undef SCIP_WITH_LPSCHECK */
++/* #undef SCIP_WITH_ZIMPL */
++/* #undef SCIP_WITH_AMPL */
++#define SCIP_ROUNDING_FE
++/* #undef SCIP_ROUNDING_FP */
++/* #undef SCIP_ROUNDING_MS */
++
++#endif
+diff --git a/src/scip/githash.c b/src/scip/githash.c
+new file mode 100644
+index 0000000000..d1e99c662d
+--- /dev/null
++++ b/src/scip/githash.c
+@@ -0,0 +1,1 @@
++
+diff --git a/src/scip/scip_export.h b/src/scip/scip_export.h
+new file mode 100644
+index 0000000000..871fde8e55
+--- /dev/null
++++ b/src/scip/scip_export.h
+@@ -0,0 +1,24 @@
++
++#ifndef SCIP_EXPORT_H
++#define SCIP_EXPORT_H
++
++#ifdef SCIP_STATIC_DEFINE
++#  define SCIP_EXPORT
++#  define SCIP_NO_EXPORT
++#else
++#  ifndef SCIP_EXPORT
++#    ifdef libscip_EXPORTS
++/* We are building this library */
++#      define SCIP_EXPORT
++#    else
++/* We are using this library */
++#      define SCIP_EXPORT
++#    endif
++#  endif
++
++#  ifndef SCIP_NO_EXPORT
++#    define SCIP_NO_EXPORT
++#  endif
++#endif
++
++#endif /* SCIP_EXPORT_H */
+diff --git a/src/symmetry/compute_symmetry_bliss.cpp b/src/symmetry/compute_symmetry_bliss.cpp
+index 0ba5ea060e..4fc4338e73 100644
+--- a/src/symmetry/compute_symmetry_bliss.cpp
++++ b/src/symmetry/compute_symmetry_bliss.cpp
+@@ -34,8 +34,8 @@
+ #include "compute_symmetry.h"
+ 
+ /* include bliss graph */
+-#include <bliss/defs.hh>
+-#include <bliss/graph.hh>
++#include <defs.hh>
++#include <graph.hh>
+ 
+ #include <string.h>
+ #include <vector>

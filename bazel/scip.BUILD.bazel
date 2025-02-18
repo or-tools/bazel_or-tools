@@ -40,22 +40,27 @@ PLATFORM_FLAGS = select({
     "on_linux": [
         "-Wunknown-pragmas",
         "-fexceptions",
+        "-DSYM=bliss",
+        "-DBLISS_VERSION=\\\"0.73\\\"",
     ],
     "on_macos": [
         "-Wunknown-pragmas",
         "-fexceptions",
+        "-DSYM=bliss",
+        "-DBLISS_VERSION=\\\"0.73\\\"",
     ],
     "on_windows": [
         "/DSYM=none",
         "/DSCIP_NO_SIGACTION",
         "/DSCIP_NO_STRTOK_R",
+        "/utf-8"
         ],
     "//conditions:default": [],
 })
 
 PLATFORM_DEPS = select({
-    "on_linux": ["@bliss//:libbliss"],
-    "on_macos": ["@bliss//:libbliss"],
+    "on_linux": ["@bliss//:bliss"],
+    "on_macos": ["@bliss//:bliss"],
     "on_windows": [],
     "//conditions:default": [],
 })
@@ -68,7 +73,7 @@ BLISS_FILE = select({
 })
 
 cc_library(
-    name = "libscip",
+    name = "scip",
     srcs = glob(
         [
             "src/*/*.c",
@@ -80,7 +85,7 @@ cc_library(
             "src/scip/nlpi_filtersqp.c",
             "src/scip/nlpi_worhp.c",
             "src/scip/*_xyz.c",
-            "src/scip/scipbuildflags.c",
+            #"src/scip/scipbuildflags.c",
             "src/scip/sorttpl.c",
             "src/symmetry/compute_symmetry_*.cpp",
             "src/symmetry/*nauty*",
@@ -104,17 +109,23 @@ cc_library(
             "src/scip/*_xyz.h",
         ]),
         copts = [
-        "$(STACK_FRAME_UNLIMITED)",  # src/scip/reader_cnf.c
-        #"-DTPI_TNY",  # src/tpi/type_tpi_tnycthrd.h
-        "-DTPI_NONE",  # src/tpi/type_tpi_none.h
-        "-Isrc",
-        "-Isrc/scip",
-    ] + PLATFORM_FLAGS,
-    defines = [],
-    features = ["-parse_headers"],
-    includes = [
-        "src",
-    ],
+          "-DSCIP_IPOPT=\\\"NONE\\\"",
+          "-DSCIP_LPS=\\\"spx2\\\"",
+          "-DSCIP_GITHASH=\\\"a740f0891e\\\"",
+          "$(STACK_FRAME_UNLIMITED)",  # src/scip/reader_cnf.c
+          #"-DTPI_TNY",  # src/tpi/type_tpi_tnycthrd.h
+          "-DTPI_NONE",  # src/tpi/type_tpi_none.h
+          "-DNPARASCIP",
+          "-Isrc",
+          "-Isrc/scip",
+        ] + PLATFORM_FLAGS,
+        defines = [
+        "NO_CONFIG_HEADER",
+        ],
+        features = ["-parse_headers"],
+        includes = [
+          "src",
+        ],
     visibility = ["//visibility:public"],
     deps = [
         #"@cppad:cppad_includes",
