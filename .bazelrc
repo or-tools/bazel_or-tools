@@ -1,3 +1,6 @@
+common --registry=file:///%workspace%/registry
+common --registry=https://bcr.bazel.build
+
 # Enable logging rc options.
 common --announce_rc
 
