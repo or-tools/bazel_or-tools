@@ -5,9 +5,15 @@ FROM opensuse/tumbleweed AS env
 # Install system build dependencies
 ENV PATH=/usr/local/bin:$PATH
 RUN zypper update -y \
-&& zypper install -y git gcc gcc-c++ zlib-devel bazel \
+&& zypper install -y git wget gcc gcc-c++ zlib-devel \
 && zypper clean -a
 ENV CC=gcc CXX=g++
+
+# Install Bazelisk
+RUN wget \
+https://github.com/bazelbuild/bazelisk/releases/download/v1.25.0/bazelisk-linux-amd64 \
+&& chmod +x bazelisk-linux-amd64 \
+&& mv bazelisk-linux-amd64 /usr/local/bin/bazel
 
 FROM env AS devel
 WORKDIR /home/project
