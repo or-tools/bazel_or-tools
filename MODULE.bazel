@@ -21,4 +21,4 @@ bazel_dep(name = "google_benchmark", version = "1.8.5", repo_name = "com_google_
 bazel_dep(name = "googletest", version = "1.15.2", repo_name = "com_google_googletest")
 bazel_dep(name = "protobuf", version = "29.3", repo_name = "com_google_protobuf")
 
-bazel_dep(name = "ortools", version = "9.12", repo_name = "com_google_ortools")
+bazel_dep(name = "or-tools", version = "9.12", repo_name = "com_google_ortools")
