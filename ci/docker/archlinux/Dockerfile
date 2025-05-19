@@ -6,6 +6,9 @@ FROM archlinux:latest AS env
 ENV PATH=/usr/local/bin:$PATH
 RUN pacman -Syu --noconfirm git base-devel bazel
 
+# Install Python
+RUN pacman -Syu --noconfirm python python-pip python-setuptools
+
 FROM env AS devel
 WORKDIR /home/project
 COPY . .
