@@ -4,10 +4,12 @@ cc_binary(
   name = "basic_example",
   srcs = ["basic_example.cc"],
   deps = [
-    "@com_google_ortools//ortools/base",
-    "@com_google_ortools//ortools/init",
-    "@com_google_ortools//ortools/linear_solver",
-    "@com_google_ortools//ortools/linear_solver:linear_solver_cc_proto",
+    "@abseil-cpp//absl/base:log_severity",
+    "@abseil-cpp//absl/log:globals",
+    "@or-tools//ortools/base",
+    "@or-tools//ortools/init",
+    "@or-tools//ortools/linear_solver",
+    "@or-tools//ortools/linear_solver:linear_solver_cc_proto",
   ],
 )
 
@@ -16,9 +18,11 @@ cc_test(
   srcs = ["basic_example.cc"],
   deps = [
     ":basic_example",
-    "@com_google_ortools//ortools/base",
-    "@com_google_ortools//ortools/init",
-    "@com_google_ortools//ortools/linear_solver",
-    "@com_google_ortools//ortools/linear_solver:linear_solver_cc_proto",
+    "@abseil-cpp//absl/base:log_severity",
+    "@abseil-cpp//absl/log:globals",
+    "@or-tools//ortools/base",
+    "@or-tools//ortools/init",
+    "@or-tools//ortools/linear_solver",
+    "@or-tools//ortools/linear_solver:linear_solver_cc_proto",
   ],
 )
