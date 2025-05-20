@@ -36,24 +36,17 @@ If you don't have Bazel installed already, you can download it for free from
 Take a look at the [MODULE.bazel](MODULE.bazel) file.
 
 # Build
-On any *\*NIX* (MacOS, GNU/Linux) platform:
-```sh
-bazel build -c opt //main:template
-```
 
-On Windows when using *MSVC 2022+*:
-```cmd
-bazel build -c opt //main:template
+To build the C++ project, as usual:
+```sh
+bazel build -c opt :all
 ```
 
 # Test
-On any *\*NIX* (MacOS, GNU/Linux) platform:
-```sh
-bazel test -c opt --test_output=all //main:test_template
-```
 
-On Windows when using *MSVC 2022+*:
-```cmd
-bazel test -c opt --test_output=all //main:test_template
+To test the C++ project, as usual:
+
+```sh
+bazel test -c opt --test_output=all :all
 ```
 
