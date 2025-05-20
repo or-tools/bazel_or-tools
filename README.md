@@ -33,7 +33,7 @@ If you don't have Bazel installed already, you can download it for free from
 <https://bazel.build/>.
 
 # Dependencies
-Take a look at the [WORKSPACE](WORKSPACE) file.
+Take a look at the [MODULE.bazel](MODULE.bazel) file.
 
 # Build
 On any *\*NIX* (MacOS, GNU/Linux) platform:
