@@ -35,3 +35,9 @@ jobs:
           -c opt
           --test_output=errors
           ...
+
+  amd64_windows_bazel:
+    runs-on: ubuntu-latest
+    needs: native
+    steps:
+      - uses: actions/checkout@v4

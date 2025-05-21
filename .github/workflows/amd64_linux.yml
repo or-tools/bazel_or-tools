@@ -9,7 +9,7 @@ concurrency:
 
 # Building using the github runner environement directly.
 jobs:
-  bzlmod:
+  native:
     name: Linux•Bazel(bzlmod)
     runs-on: ubuntu-latest
     steps:
@@ -35,3 +35,9 @@ jobs:
           --test_output=errors
           --enable_bzlmod
           //...
+
+  amd64_linux_bazel:
+    runs-on: ubuntu-latest
+    needs: native
+    steps:
+      - uses: actions/checkout@v4
