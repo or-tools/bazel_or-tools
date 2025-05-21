@@ -98,17 +98,6 @@ DOCKER_BUILDX_CMD := ${DOCKER_BUILDX_CMD} --progress=plain
 endif
 DOCKER_RUN_CMD := docker run --rm --init --net=host
 
-# Currently supported distro
-DISTROS := \
- almalinux \
- alpine \
- archlinux \
- debian \
- fedora \
- opensuse \
- rockylinux \
- ubuntu
-
 # $* stem
 # $< first prerequist
 # $@ target name
@@ -122,6 +111,9 @@ PLATFORMS := \
  ppc64 ppc64le \
  riscv64 \
  s390x
+
+# Currently supported distro
+DISTROS := almalinux alpine archlinux debian fedora opensuse rockylinux ubuntu
 
 STAGES = env devel build test
 
