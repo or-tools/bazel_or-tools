@@ -18,7 +18,7 @@ jobs:
     name: ${{matrix.runner}}•Bazel
     runs-on: ${{matrix.runner}}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - name: Install Bazel
         run: choco install bazel
       - name: Check Bazel
@@ -40,4 +40,4 @@ jobs:
     runs-on: ubuntu-latest
     needs: native
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
