@@ -11,10 +11,10 @@ module(
 )
 
 # see https://registry.bazel.build/
-bazel_dep(name = "bazel_skylib", version = "1.8.1")
+bazel_dep(name = "bazel_skylib", version = "1.8.2")
 bazel_dep(name = "platforms", version = "1.0.0")
-bazel_dep(name = "rules_cc", version = "0.1.4")
+bazel_dep(name = "rules_cc", version = "0.2.9")
 bazel_dep(name = "rules_proto", version = "7.1.0")
 
-bazel_dep(name = "abseil-cpp", version = "20250512.1")
-bazel_dep(name = "or-tools", version = "9.14")
+bazel_dep(name = "abseil-cpp", version = "20250814.1")
+bazel_dep(name = "or-tools", version = "9.15")

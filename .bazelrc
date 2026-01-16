@@ -1,34 +1,61 @@
 # Enable logging rc options.
 common --announce_rc
 
-# ----CONFIG OPTIONS----
+###############################################################################
+# Global options for building OR-Tools.
+###############################################################################
+
 build --flag_alias=with_bop=//ortools/linear_solver:with_bop
 build --flag_alias=with_cbc=//ortools/linear_solver:with_cbc
 build --flag_alias=with_clp=//ortools/linear_solver:with_clp
 build --flag_alias=with_cp_sat=//ortools/linear_solver:with_cp_sat
+build --flag_alias=with_cplex=//ortools/linear_solver:with_cplex
 build --flag_alias=with_glop=//ortools/linear_solver:with_glop
 build --flag_alias=with_glpk=//ortools/linear_solver:with_glpk
 build --flag_alias=with_highs=//ortools/linear_solver:with_highs
 build --flag_alias=with_pdlp=//ortools/linear_solver:with_pdlp
 build --flag_alias=with_scip=//ortools/linear_solver:with_scip
-
-build --flag_alias=with_cplex=//ortools/linear_solver:with_cplex
 build --flag_alias=with_xpress=//ortools/linear_solver:with_xpress
+
+# Enable absl::string_view support in @googletest
+build --define absl=1
 
 # Enable verbose failures for testing only.
 build --verbose_failures
 
-# Set the default Apple platform to macOS.
-build --apple_platform_type=macos
+###############################################################################
+# Per plaform options
+###############################################################################
 
-# OR-Tools requires C++ 17 at minimum.
+# By default, build with various extra flags per platform.
 build --enable_platform_specific_config
-build:linux --cxxopt=-std=c++17 --cxxopt=-Wno-sign-compare
-build:linux --host_cxxopt=-std=c++17 --host_cxxopt=-Wno-sign-compare
-build:macos --cxxopt=-std=c++17  --cxxopt=-Wno-sign-compare --cxxopt=-mmacos-version-min=10.15  --cxxopt=-Wno-dangling-field --features=-supports_dynamic_linker
-build:macos --host_cxxopt=-std=c++17 --host_cxxopt=-Wno-sign-compare --host_cxxopt=-mmacos-version-min=10.15 --host_cxxopt=-Wno-dangling-field
-build:windows --cxxopt=/std:c++20
-build:windows --host_cxxopt=/std:c++20
+
+###############################################################################
+# Options for Linux.
+###############################################################################
+
+build:linux --cxxopt=-std=c++17 --host_cxxopt=-std=c++17
+build:linux --cxxopt=-Wno-sign-compare --host_cxxopt=-Wno-sign-compare
+build:linux --cxxopt=-Wno-range-loop-construct --host_cxxopt=-Wno-range-loop-construct
+
+###############################################################################
+# Options for macOS.
+###############################################################################
+
+# Sets the default Apple platform to macOS.
+build --apple_platform_type=macos
+build:macos --features=-supports_dynamic_linker
+build:macos --cxxopt=-std=c++17 --host_cxxopt=-std=c++17
+build:macos --cxxopt=-Wno-sign-compare --host_cxxopt=-Wno-sign-compare
+build:macos --cxxopt=-Wno-dangling-field --host_cxxopt=-Wno-dangling-field
+build:macos --cxxopt=-Wno-range-loop-construct --host_cxxopt=-Wno-range-loop-construct
+build:macos --cxxopt=-mmacos-version-min=10.15 --host_cxxopt=-mmacos-version-min=10.15
+
+###############################################################################
+# Options for Windows.
+###############################################################################
+
+build:windows --cxxopt=/std:c++20 --host_cxxopt=/std:c++20
 
 # Enable the runfiles symlink tree on Windows. This makes it possible to build
 # the pip package on Windows without an intermediate data-file archive, as the
@@ -44,5 +71,8 @@ build:windows --enable_runfiles
 test --test_output=errors
 test --test_summary=detailed
 
-# https://bazel.build/configure/best-practices#bazelrc-file
+###############################################################################
+# Put user-specific options in user.bazelrc
+# See https://bazel.build/configure/best-practices#bazelrc-file
+################################################################################
 try-import %workspace%/user.bazelrc
